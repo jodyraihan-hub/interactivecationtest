@@ -691,6 +691,7 @@ page = st.sidebar.radio(
 
 st.sidebar.divider()
 st.sidebar.caption("Mencakup Golongan I, III, dan IV\nVersi 3.0 | 2026")
+st.sidebar.caption("Mencakup Golongan I, III, dan IV\nVersi 3.0 | 2026")
 
 # ============================================
 # HALAMAN: BERANDA
