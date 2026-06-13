@@ -691,7 +691,12 @@ page = st.sidebar.radio(
 
 st.sidebar.divider()
 st.sidebar.caption("Mencakup Golongan I, III, dan IV\nVersi 3.0 | 2026")
-st.sidebar.caption("Mencakup Golongan I, III, dan IV\nVersi 3.0 | 2026")
+st.sidebar.caption(""" Created by : [Dwi Revani Tyas - 2560713]
+                                    [Dyah Siti Wulandari - 2560615]
+                                    [Raihan Jody Nur Alpian - 2560743]
+                                    [Rizka Diana Putri - 2560762]
+                                    [Yelsi - 2560807]
+""")
 
 # ============================================
 # HALAMAN: BERANDA
