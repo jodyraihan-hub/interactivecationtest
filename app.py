@@ -60,9 +60,9 @@ st.markdown("""
 }
 
 h1 {
-    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
-    -webkit-background-clip: text !important;
-    -webkit-text-fill-color: transparent !important;
+    color: #f1f5f9 !important;
+    -webkit-text-fill-color: #f1f5f9 !important;
+    background: none !important;
     background-clip: text !important;
     font-weight: 800 !important;
     font-size: 2.2rem !important;
