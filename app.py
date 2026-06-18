@@ -1,5 +1,4 @@
 import streamlit as st
-import base64
 
 from streamlit_agraph import agraph, Node, Edge, Config
 
@@ -20,283 +19,272 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-def inject_custom_css():
-    """Inject CSS kustom untuk tema berwarna elegan"""
 
-    # Baca file CSS (simpan custom_theme.css di folder yang sama dengan app.py)
-    # Atau gunakan string CSS langsung di bawah ini:
+st.markdown("""
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-    custom_css = """
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+.stApp {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
+    font-family: 'Inter', sans-serif !important;
+    color: #f1f5f9 !important;
+}
 
-    :root {
-        --primary: #0f766e;
-        --primary-light: #14b8a6;
-        --primary-dark: #115e59;
-        --accent: #d97706;
-        --accent-light: #f59e0b;
-        --danger: #dc2626;
-        --success: #059669;
-        --warning: #d97706;
-        --info: #0284c7;
-        --bg-dark: #0f172a;
-        --bg-card: #1e293b;
-        --bg-elevated: #334155;
-        --text-primary: #f1f5f9;
-        --text-secondary: #94a3b8;
-        --text-muted: #64748b;
-        --border: #334155;
-        --radius-sm: 8px;
-        --radius-md: 12px;
-        --radius-lg: 16px;
-        --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.3);
-        --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
-        --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
-    }
+::-webkit-scrollbar { width: 8px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #0f766e; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
 
-    .stApp {
-        background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
-        font-family: 'Inter', sans-serif !important;
-    }
+[data-testid="stSidebar"] {
+    background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
+    border-right: 1px solid #334155;
+}
 
-    ::-webkit-scrollbar { width: 8px; }
-    ::-webkit-scrollbar-track { background: #0f172a; }
-    ::-webkit-scrollbar-thumb { background: #0f766e; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
+[data-testid="stSidebar"] .stRadio > label {
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+    font-size: 0.95rem !important;
+    padding: 0.5rem 0.75rem !important;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
 
-    [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
-        border-right: 1px solid #334155;
-    }
+[data-testid="stSidebar"] .stRadio > label:hover {
+    background: rgba(20, 184, 166, 0.1) !important;
+    color: #14b8a6 !important;
+}
 
-    [data-testid="stSidebar"] .stRadio > label {
-        color: #94a3b8 !important;
-        font-weight: 500 !important;
-        font-size: 0.95rem !important;
-        padding: 0.5rem 0.75rem !important;
-        border-radius: 8px;
-        transition: all 0.2s ease;
-    }
+[data-testid="stSidebar"] h1, [data-testid="stSidebar"] h2, [data-testid="stSidebar"] h3 {
+    color: #14b8a6 !important;
+    font-weight: 700 !important;
+}
 
-    [data-testid="stSidebar"] .stRadio > label:hover {
-        background: rgba(20, 184, 166, 0.1) !important;
-        color: #14b8a6 !important;
-    }
+h1 {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-weight: 800 !important;
+    font-size: 2.2rem !important;
+    letter-spacing: -0.03em !important;
+    margin-bottom: 0.5rem !important;
+}
 
-    h1 {
-        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        background-clip: text !important;
-        font-weight: 800 !important;
-        font-size: 2.2rem !important;
-        letter-spacing: -0.03em !important;
-    }
+h2 {
+    color: #f1f5f9 !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+    border-left: 4px solid #14b8a6;
+    padding-left: 0.75rem !important;
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
 
-    h2 {
-        color: #f1f5f9 !important;
-        font-weight: 700 !important;
-        font-size: 1.5rem !important;
-        border-left: 4px solid #14b8a6;
-        padding-left: 0.75rem !important;
-        margin-top: 1.5rem !important;
-    }
+h3 { color: #14b8a6 !important; font-weight: 600 !important; font-size: 1.2rem !important; }
+p, .stMarkdown { color: #cbd5e1 !important; }
 
-    h3 { color: #14b8a6 !important; font-weight: 600 !important; }
+[data-testid="stVerticalBlock"] > div > [data-testid="stVerticalBlock"] {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-radius: 12px !important;
+    padding: 1.25rem !important;
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4) !important;
+    transition: all 0.2s ease;
+}
 
-    [data-testid="stVerticalBlock"] > div > [data-testid="stVerticalBlock"] {
-        background: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 12px !important;
-        padding: 1.25rem !important;
-        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4) !important;
-        transition: all 0.2s ease;
-    }
+[data-testid="stVerticalBlock"] > div > [data-testid="stVerticalBlock"]:hover {
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5) !important;
+    border-color: rgba(20, 184, 166, 0.3) !important;
+}
 
-    [data-testid="stVerticalBlock"] > div > [data-testid="stVerticalBlock"]:hover {
-        box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5) !important;
-        border-color: rgba(20, 184, 166, 0.3) !important;
-    }
+.stButton > button {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
+    color: white !important;
+    border: none !important;
+    border-radius: 8px !important;
+    padding: 0.6rem 1.2rem !important;
+    font-weight: 600 !important;
+    font-size: 0.9rem !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 2px 8px rgba(15, 118, 110, 0.3) !important;
+}
 
-    .stButton > button {
-        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
-        color: white !important;
-        border: none !important;
-        border-radius: 8px !important;
-        padding: 0.6rem 1.2rem !important;
-        font-weight: 600 !important;
-        box-shadow: 0 2px 8px rgba(15, 118, 110, 0.3) !important;
-        transition: all 0.2s ease !important;
-    }
+.stButton > button:hover {
+    transform: translateY(-1px) !important;
+    box-shadow: 0 4px 12px rgba(15, 118, 110, 0.4) !important;
+    filter: brightness(1.1) !important;
+}
 
-    .stButton > button:hover {
-        transform: translateY(-1px) !important;
-        box-shadow: 0 4px 12px rgba(15, 118, 110, 0.4) !important;
-        filter: brightness(1.1) !important;
-    }
+[data-testid="stTable"] {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+    border: 1px solid #334155 !important;
+}
 
-    [data-testid="stTable"] {
-        border-radius: 12px !important;
-        overflow: hidden !important;
-        border: 1px solid #334155 !important;
-    }
+[data-testid="stTable"] table {
+    background: #1e293b !important;
+    color: #f1f5f9 !important;
+    font-size: 0.9rem !important;
+}
 
-    [data-testid="stTable"] table {
-        background: #1e293b !important;
-        color: #f1f5f9 !important;
-    }
+[data-testid="stTable"] th {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
+    color: white !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1rem !important;
+    text-align: left !important;
+    text-transform: uppercase !important;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.05em !important;
+}
 
-    [data-testid="stTable"] th {
-        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
-        color: white !important;
-        font-weight: 600 !important;
-        padding: 0.75rem 1rem !important;
-        text-transform: uppercase !important;
-        font-size: 0.75rem !important;
-        letter-spacing: 0.05em !important;
-    }
+[data-testid="stTable"] td {
+    padding: 0.6rem 1rem !important;
+    border-bottom: 1px solid #334155 !important;
+    color: #94a3b8 !important;
+}
 
-    [data-testid="stTable"] td {
-        padding: 0.6rem 1rem !important;
-        border-bottom: 1px solid #334155 !important;
-        color: #94a3b8 !important;
-    }
+[data-testid="stTable"] tr:hover td {
+    background: rgba(20, 184, 166, 0.05) !important;
+    color: #f1f5f9 !important;
+}
 
-    [data-testid="stTable"] tr:hover td {
-        background: rgba(20, 184, 166, 0.05) !important;
-        color: #f1f5f9 !important;
-    }
+.stCode {
+    background: #0d1117 !important;
+    border: 1px solid #30363d !important;
+    border-radius: 8px !important;
+    padding: 0.75rem !important;
+}
 
-    .stCode {
-        background: #0d1117 !important;
-        border: 1px solid #30363d !important;
-        border-radius: 8px !important;
-    }
+.stCode pre {
+    color: #e6edf3 !important;
+    font-family: 'JetBrains Mono', monospace !important;
+    font-size: 0.85rem !important;
+}
 
-    .stCode pre {
-        color: #e6edf3 !important;
-        font-family: 'JetBrains Mono', monospace !important;
-        font-size: 0.85rem !important;
-    }
+.stAlert { border-radius: 8px !important; border: none !important; padding: 1rem 1.25rem !important; }
 
-    .stAlert[data-baseweb="notification"][data-kind="positive"] {
-        background: rgba(5, 150, 105, 0.1) !important;
-        border-left: 4px solid #059669 !important;
-        color: #34d399 !important;
-    }
+.stAlert[data-baseweb="notification"][data-kind="positive"] {
+    background: rgba(5, 150, 105, 0.1) !important;
+    border-left: 4px solid #059669 !important;
+    color: #34d399 !important;
+}
 
-    .stAlert[data-baseweb="notification"][data-kind="warning"] {
-        background: rgba(217, 119, 6, 0.1) !important;
-        border-left: 4px solid #d97706 !important;
-        color: #fbbf24 !important;
-    }
+.stAlert[data-baseweb="notification"][data-kind="warning"] {
+    background: rgba(217, 119, 6, 0.1) !important;
+    border-left: 4px solid #d97706 !important;
+    color: #fbbf24 !important;
+}
 
-    .stAlert[data-baseweb="notification"][data-kind="negative"] {
-        background: rgba(220, 38, 38, 0.1) !important;
-        border-left: 4px solid #dc2626 !important;
-        color: #f87171 !important;
-    }
+.stAlert[data-baseweb="notification"][data-kind="negative"] {
+    background: rgba(220, 38, 38, 0.1) !important;
+    border-left: 4px solid #dc2626 !important;
+    color: #f87171 !important;
+}
 
-    .stAlert[data-baseweb="notification"][data-kind="info"] {
-        background: rgba(2, 132, 199, 0.1) !important;
-        border-left: 4px solid #0284c7 !important;
-        color: #38bdf8 !important;
-    }
+.stAlert[data-baseweb="notification"][data-kind="info"] {
+    background: rgba(2, 132, 199, 0.1) !important;
+    border-left: 4px solid #0284c7 !important;
+    color: #38bdf8 !important;
+}
 
-    .streamlit-expanderHeader {
-        background: #334155 !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-        color: #f1f5f9 !important;
-        font-weight: 600 !important;
-    }
+.streamlit-expanderHeader {
+    background: #334155 !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    color: #f1f5f9 !important;
+    font-weight: 600 !important;
+    padding: 0.75rem 1rem !important;
+    transition: all 0.2s ease;
+}
 
-    .streamlit-expanderHeader:hover {
-        background: rgba(20, 184, 166, 0.1) !important;
-        border-color: #14b8a6 !important;
-    }
+.streamlit-expanderHeader:hover {
+    background: rgba(20, 184, 166, 0.1) !important;
+    border-color: #14b8a6 !important;
+}
 
-    .stProgress > div > div {
-        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
-        border-radius: 999px !important;
-    }
+.stProgress > div > div {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
+    border-radius: 999px !important;
+    height: 8px !important;
+}
 
-    .stProgress > div { background: #334155 !important; border-radius: 999px !important; }
+.stProgress > div { background: #334155 !important; border-radius: 999px !important; }
 
-    [data-testid="stMetricValue"] {
-        background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
-        -webkit-background-clip: text !important;
-        -webkit-text-fill-color: transparent !important;
-        font-weight: 700 !important;
-        font-size: 1.5rem !important;
-    }
+[data-testid="stMetricValue"] {
+    background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    font-weight: 700 !important;
+    font-size: 1.5rem !important;
+}
 
-    [data-testid="stMetricLabel"] {
-        color: #94a3b8 !important;
-        font-size: 0.8rem !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-    }
+[data-testid="stMetricLabel"] {
+    color: #94a3b8 !important;
+    font-size: 0.8rem !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+}
 
-    hr {
-        border: none !important;
-        height: 1px !important;
-        background: linear-gradient(90deg, transparent, #14b8a6, transparent) !important;
-        margin: 1.5rem 0 !important;
-    }
+hr {
+    border: none !important;
+    height: 1px !important;
+    background: linear-gradient(90deg, transparent, #14b8a6, transparent) !important;
+    margin: 1.5rem 0 !important;
+}
 
-    .stSelectbox > div > div {
-        background: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-radius: 8px !important;
-        color: #f1f5f9 !important;
-    }
+.stSelectbox > div > div {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-radius: 8px !important;
+    color: #f1f5f9 !important;
+}
 
-    .stTabs [data-baseweb="tab-list"] {
-        background: #1e293b !important;
-        border-radius: 8px 8px 0 0 !important;
-        border-bottom: 2px solid #334155 !important;
-    }
+.stTabs [data-baseweb="tab-list"] {
+    background: #1e293b !important;
+    border-radius: 8px 8px 0 0 !important;
+    border-bottom: 2px solid #334155 !important;
+    gap: 0 !important;
+}
 
-    .stTabs [data-baseweb="tab"] {
-        color: #94a3b8 !important;
-        font-weight: 500 !important;
-        padding: 0.75rem 1.25rem !important;
-        border-bottom: 2px solid transparent !important;
-    }
+.stTabs [data-baseweb="tab"] {
+    color: #94a3b8 !important;
+    font-weight: 500 !important;
+    padding: 0.75rem 1.25rem !important;
+    border: none !important;
+    border-bottom: 2px solid transparent !important;
+    transition: all 0.2s ease;
+}
 
-    .stTabs [data-baseweb="tab"][aria-selected="true"] {
-        color: #14b8a6 !important;
-        border-bottom: 2px solid #14b8a6 !important;
-        background: rgba(20, 184, 166, 0.05) !important;
-    }
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    color: #14b8a6 !important;
+    border-bottom: 2px solid #14b8a6 !important;
+    background: rgba(20, 184, 166, 0.05) !important;
+}
 
-    .stTabs [data-baseweb="tab-panel"] {
-        background: #1e293b !important;
-        border: 1px solid #334155 !important;
-        border-top: none !important;
-        border-radius: 0 0 8px 8px !important;
-        padding: 1.5rem !important;
-    }
+.stTabs [data-baseweb="tab-panel"] {
+    background: #1e293b !important;
+    border: 1px solid #334155 !important;
+    border-top: none !important;
+    border-radius: 0 0 8px 8px !important;
+    padding: 1.5rem !important;
+}
 
-    .stApp::before {
-        content: '';
-        position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: 
-            radial-gradient(ellipse at 20% 80%, rgba(15, 118, 110, 0.08) 0%, transparent 50%),
-            radial-gradient(ellipse at 80% 20%, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: 0;
-    }
+.stApp::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        radial-gradient(ellipse at 20% 80%, rgba(15, 118, 110, 0.08) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, rgba(217, 119, 6, 0.06) 0%, transparent 50%);
+    pointer-events: none;
+    z-index: 0;
+}
 
-    .stApp > header, .stApp > section { position: relative; z-index: 1; }
-    </style>
-    """
-
-    st.markdown(custom_css, unsafe_allow_html=True)
-
+.stApp > header, .stApp > section { position: relative; z-index: 1; }
+</style>
+""", unsafe_allow_html=True)
 
 # ============================================
 # DATA KATION
