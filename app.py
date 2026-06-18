@@ -19,6 +19,204 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
+# Custom CSS untuk tampilan premium
+def load_custom_css():
+    st.markdown("""
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+    
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    /* Gradient Background */
+    .stApp {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    }
+    
+    /* Glassmorphism Container */
+    .glass-container {
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border-radius: 20px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        padding: 20px;
+        margin: 10px 0;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+    }
+    
+    /* Animated Background Particles */
+    .particles {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+    }
+    
+    /* Custom Buttons */
+    .stButton > button {
+        background: linear-gradient(45deg, #FF6B6B, #FF8E53);
+        color: white;
+        border: none;
+        border-radius: 25px;
+        padding: 12px 24px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    }
+    
+    .stButton > button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+    }
+    
+    /* Success Button Variant */
+    .btn-success > button {
+        background: linear-gradient(45deg, #4ECDC4, #44A08D);
+        box-shadow: 0 4px 15px rgba(78, 205, 196, 0.4);
+    }
+    
+    /* Warning Button Variant */
+    .btn-warning > button {
+        background: linear-gradient(45deg, #FFD93D, #F6AD55);
+        box-shadow: 0 4px 15px rgba(255, 217, 61, 0.4);
+    }
+    
+    /* Custom Progress Bar */
+    .stProgress > div > div {
+        background: linear-gradient(90deg, #FF6B6B, #4ECDC4, #FFD93D);
+        border-radius: 10px;
+    }
+    
+    /* Card Hover Effects */
+    .element-container:hover {
+        transform: scale(1.02);
+        transition: transform 0.3s ease;
+    }
+    
+    /* Custom Headers */
+    h1 {
+        background: linear-gradient(120deg, #FF6B6B, #4ECDC4);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        font-weight: 700;
+    }
+    
+    h2, h3 {
+        color: #2D3748;
+        font-weight: 600;
+    }
+    
+    /* Badge Styling */
+    .badge {
+        display: inline-block;
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.85em;
+        font-weight: 600;
+        margin: 2px;
+    }
+    
+    .badge-group-1 { background: linear-gradient(45deg, #FF6B6B, #FF8E53); color: white; }
+    .badge-group-3 { background: linear-gradient(45deg, #4ECDC4, #44A08D); color: white; }
+    .badge-group-4 { background: linear-gradient(45deg, #FFD93D, #F6AD55); color: #2D3748; }
+    
+    /* Pulse Animation for Important Elements */
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+        100% { transform: scale(1); }
+    }
+    
+    .pulse {
+        animation: pulse 2s infinite;
+    }
+    
+    /* Fade In Animation */
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+        animation: fadeIn 0.6s ease-out;
+    }
+    
+    /* Floating Animation */
+    @keyframes float {
+        0% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+        100% { transform: translateY(0px); }
+    }
+    
+    .float {
+        animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Custom Table */
+    .stTable {
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    
+    /* Sidebar Styling */
+    .css-1d391kg {
+        background: linear-gradient(180deg, #2D3748 0%, #1A202C 100%);
+    }
+    
+    /* Expander Styling */
+    .streamlit-expanderHeader {
+        background: rgba(255,255,255,0.1);
+        border-radius: 10px;
+        font-weight: 600;
+    }
+    
+    /* Code Block Styling */
+    .stCode {
+        background: rgba(0,0,0,0.8);
+        border-radius: 10px;
+        border-left: 4px solid #4ECDC4;
+    }
+    
+    /* Metric Cards */
+    .metric-card {
+        background: rgba(255,255,255,0.15);
+        border-radius: 15px;
+        padding: 20px;
+        text-align: center;
+        backdrop-filter: blur(5px);
+    }
+    
+    .metric-value {
+        font-size: 2.5em;
+        font-weight: 700;
+        background: linear-gradient(45deg, #FF6B6B, #FFD93D);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    /* Confetti Animation */
+    @keyframes confetti {
+        0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+        100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+    }
+    
+    .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        background: #FF6B6B;
+        animation: confetti 3s ease-out forwards;
+        z-index: 9999;
+    }
+    </style>
+    """, unsafe_allow_html=True)
+
+load_custom_css()
 
 # ============================================
 # DATA KATION
