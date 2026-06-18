@@ -150,16 +150,43 @@ p, .stMarkdown { color: #cbd5e1 !important; }
 }
 
 .stCode {
-    background: #0d1117 !important;
-    border: 1px solid #30363d !important;
-    border-radius: 8px !important;
-    padding: 0.75rem !important;
+    background: #1a2332 !important;
+    border: 1px solid #2d3a4a !important;
+    border-radius: 10px !important;
+    padding: 0 !important;
+    overflow: hidden !important;
 }
 
+/* Pre tag */
 .stCode pre {
-    color: #e6edf3 !important;
-    font-family: 'JetBrains Mono', monospace !important;
-    font-size: 0.85rem !important;
+    background: #1a2332 !important;
+    color: #e2e8f0 !important;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+    font-size: 0.9rem !important;
+    line-height: 1.7 !important;
+    padding: 1rem 1.25rem !important;
+    margin: 0 !important;
+}
+
+/* Code tag di dalam pre */
+.stCode pre code {
+    background: transparent !important;
+    color: #e2e8f0 !important;
+    font-family: 'JetBrains Mono', 'Fira Code', monospace !important;
+    font-size: 0.9rem !important;
+}
+
+/* Tombol copy di code block */
+.stCode button {
+    background: #2d3a4a !important;
+    color: #94a3b8 !important;
+    border: 1px solid #3d4a5a !important;
+    border-radius: 6px !important;
+}
+
+.stCode button:hover {
+    background: #3d4a5a !important;
+    color: #e2e8f0 !important;
 }
 
 .stAlert { border-radius: 8px !important; border: none !important; padding: 1rem 1.25rem !important; }
