@@ -19,7 +19,7 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-python_inject_code = '''
+python_inject_code = 
 # ============================================
 # CUSTOM THEME INJECTOR
 # Tambahkan di BAGIAN PALING ATAS file Streamlit Anda
