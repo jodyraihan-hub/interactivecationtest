@@ -19,25 +19,16 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-python_inject_code = 
-# ============================================
-# CUSTOM THEME INJECTOR
-# Tambahkan di BAGIAN PALING ATAS file Streamlit Anda
-# ============================================
-
-import streamlit as st
-import base64
-
 def inject_custom_css():
     """Inject CSS kustom untuk tema berwarna elegan"""
-    
+
     # Baca file CSS (simpan custom_theme.css di folder yang sama dengan app.py)
     # Atau gunakan string CSS langsung di bawah ini:
-    
+
     custom_css = """
     <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-    
+
     :root {
         --primary: #0f766e;
         --primary-light: #14b8a6;
@@ -62,22 +53,22 @@ def inject_custom_css():
         --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4);
         --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5);
     }
-    
+
     .stApp {
         background: linear-gradient(180deg, #0f172a 0%, #1e293b 100%) !important;
         font-family: 'Inter', sans-serif !important;
     }
-    
+
     ::-webkit-scrollbar { width: 8px; }
     ::-webkit-scrollbar-track { background: #0f172a; }
     ::-webkit-scrollbar-thumb { background: #0f766e; border-radius: 4px; }
     ::-webkit-scrollbar-thumb:hover { background: #14b8a6; }
-    
+
     [data-testid="stSidebar"] {
         background: linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%) !important;
         border-right: 1px solid #334155;
     }
-    
+
     [data-testid="stSidebar"] .stRadio > label {
         color: #94a3b8 !important;
         font-weight: 500 !important;
@@ -86,12 +77,12 @@ def inject_custom_css():
         border-radius: 8px;
         transition: all 0.2s ease;
     }
-    
+
     [data-testid="stSidebar"] .stRadio > label:hover {
         background: rgba(20, 184, 166, 0.1) !important;
         color: #14b8a6 !important;
     }
-    
+
     h1 {
         background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
         -webkit-background-clip: text !important;
@@ -101,7 +92,7 @@ def inject_custom_css():
         font-size: 2.2rem !important;
         letter-spacing: -0.03em !important;
     }
-    
+
     h2 {
         color: #f1f5f9 !important;
         font-weight: 700 !important;
@@ -110,9 +101,9 @@ def inject_custom_css():
         padding-left: 0.75rem !important;
         margin-top: 1.5rem !important;
     }
-    
+
     h3 { color: #14b8a6 !important; font-weight: 600 !important; }
-    
+
     [data-testid="stVerticalBlock"] > div > [data-testid="stVerticalBlock"] {
         background: #1e293b !important;
         border: 1px solid #334155 !important;
@@ -121,12 +112,12 @@ def inject_custom_css():
         box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.4), 0 2px 4px -2px rgb(0 0 0 / 0.4) !important;
         transition: all 0.2s ease;
     }
-    
+
     [data-testid="stVerticalBlock"] > div > [data-testid="stVerticalBlock"]:hover {
         box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.5), 0 4px 6px -4px rgb(0 0 0 / 0.5) !important;
         border-color: rgba(20, 184, 166, 0.3) !important;
     }
-    
+
     .stButton > button {
         background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
         color: white !important;
@@ -137,24 +128,24 @@ def inject_custom_css():
         box-shadow: 0 2px 8px rgba(15, 118, 110, 0.3) !important;
         transition: all 0.2s ease !important;
     }
-    
+
     .stButton > button:hover {
         transform: translateY(-1px) !important;
         box-shadow: 0 4px 12px rgba(15, 118, 110, 0.4) !important;
         filter: brightness(1.1) !important;
     }
-    
+
     [data-testid="stTable"] {
         border-radius: 12px !important;
         overflow: hidden !important;
         border: 1px solid #334155 !important;
     }
-    
+
     [data-testid="stTable"] table {
         background: #1e293b !important;
         color: #f1f5f9 !important;
     }
-    
+
     [data-testid="stTable"] th {
         background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
         color: white !important;
@@ -164,54 +155,54 @@ def inject_custom_css():
         font-size: 0.75rem !important;
         letter-spacing: 0.05em !important;
     }
-    
+
     [data-testid="stTable"] td {
         padding: 0.6rem 1rem !important;
         border-bottom: 1px solid #334155 !important;
         color: #94a3b8 !important;
     }
-    
+
     [data-testid="stTable"] tr:hover td {
         background: rgba(20, 184, 166, 0.05) !important;
         color: #f1f5f9 !important;
     }
-    
+
     .stCode {
         background: #0d1117 !important;
         border: 1px solid #30363d !important;
         border-radius: 8px !important;
     }
-    
+
     .stCode pre {
         color: #e6edf3 !important;
         font-family: 'JetBrains Mono', monospace !important;
         font-size: 0.85rem !important;
     }
-    
+
     .stAlert[data-baseweb="notification"][data-kind="positive"] {
         background: rgba(5, 150, 105, 0.1) !important;
         border-left: 4px solid #059669 !important;
         color: #34d399 !important;
     }
-    
+
     .stAlert[data-baseweb="notification"][data-kind="warning"] {
         background: rgba(217, 119, 6, 0.1) !important;
         border-left: 4px solid #d97706 !important;
         color: #fbbf24 !important;
     }
-    
+
     .stAlert[data-baseweb="notification"][data-kind="negative"] {
         background: rgba(220, 38, 38, 0.1) !important;
         border-left: 4px solid #dc2626 !important;
         color: #f87171 !important;
     }
-    
+
     .stAlert[data-baseweb="notification"][data-kind="info"] {
         background: rgba(2, 132, 199, 0.1) !important;
         border-left: 4px solid #0284c7 !important;
         color: #38bdf8 !important;
     }
-    
+
     .streamlit-expanderHeader {
         background: #334155 !important;
         border: 1px solid #334155 !important;
@@ -219,19 +210,19 @@ def inject_custom_css():
         color: #f1f5f9 !important;
         font-weight: 600 !important;
     }
-    
+
     .streamlit-expanderHeader:hover {
         background: rgba(20, 184, 166, 0.1) !important;
         border-color: #14b8a6 !important;
     }
-    
+
     .stProgress > div > div {
         background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%) !important;
         border-radius: 999px !important;
     }
-    
+
     .stProgress > div { background: #334155 !important; border-radius: 999px !important; }
-    
+
     [data-testid="stMetricValue"] {
         background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
         -webkit-background-clip: text !important;
@@ -239,47 +230,47 @@ def inject_custom_css():
         font-weight: 700 !important;
         font-size: 1.5rem !important;
     }
-    
+
     [data-testid="stMetricLabel"] {
         color: #94a3b8 !important;
         font-size: 0.8rem !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
     }
-    
+
     hr {
         border: none !important;
         height: 1px !important;
         background: linear-gradient(90deg, transparent, #14b8a6, transparent) !important;
         margin: 1.5rem 0 !important;
     }
-    
+
     .stSelectbox > div > div {
         background: #1e293b !important;
         border: 1px solid #334155 !important;
         border-radius: 8px !important;
         color: #f1f5f9 !important;
     }
-    
+
     .stTabs [data-baseweb="tab-list"] {
         background: #1e293b !important;
         border-radius: 8px 8px 0 0 !important;
         border-bottom: 2px solid #334155 !important;
     }
-    
+
     .stTabs [data-baseweb="tab"] {
         color: #94a3b8 !important;
         font-weight: 500 !important;
         padding: 0.75rem 1.25rem !important;
         border-bottom: 2px solid transparent !important;
     }
-    
+
     .stTabs [data-baseweb="tab"][aria-selected="true"] {
         color: #14b8a6 !important;
         border-bottom: 2px solid #14b8a6 !important;
         background: rgba(20, 184, 166, 0.05) !important;
     }
-    
+
     .stTabs [data-baseweb="tab-panel"] {
         background: #1e293b !important;
         border: 1px solid #334155 !important;
@@ -287,7 +278,7 @@ def inject_custom_css():
         border-radius: 0 0 8px 8px !important;
         padding: 1.5rem !important;
     }
-    
+
     .stApp::before {
         content: '';
         position: fixed;
@@ -298,11 +289,11 @@ def inject_custom_css():
         pointer-events: none;
         z-index: 0;
     }
-    
+
     .stApp > header, .stApp > section { position: relative; z-index: 1; }
     </style>
     """
-    
+
     st.markdown(custom_css, unsafe_allow_html=True)
 
 
